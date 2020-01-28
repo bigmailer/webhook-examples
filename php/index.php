@@ -36,7 +36,7 @@ $signed_payload = $t . "." . $payload;
 
 $expected_signature = hash_hmac('sha256', $signed_payload, $secret);
 
-if ($signature !== $expected_signature || abs($t - time()) > 300) {
+if (!hash_equals($expected_signature, $signature) || abs($t - time()) > 300) {
     // Request is not from BigMailer, don't process the event.
     http_response_code(400);
     return;
